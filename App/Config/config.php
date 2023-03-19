@@ -1,10 +1,10 @@
 <?php
 $config = array(
     'database' => array(
-        'ip' => 'localhost',
-        'name' => 'framework-y',
-        'user' => 'root',
-        'password' => '',
+        'ip' => getenv('database_ip'),
+        'name' => getenv('database_name'),
+        'user' => getenv('database_user'),
+        'password' => getenv('database_password'),
     ),
     'website_url' => 'http://localhost'
 );
