@@ -104,7 +104,7 @@ class HttpKernel extends Exception implements ControllerResolverInterface
      * @return bool
      * 
      */
-    public function checkCSRF($token)
+    public static function checkCSRF($token)
     {
         if ($token == Request::getSession('bc_sessions_csrf_token', 'none')) {
             return true;

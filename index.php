@@ -1,26 +1,53 @@
 <?php
 
+@session_start();
+
 require 'App/Router/Router.php';
 require 'App/Models/Autoload.php';
 
 use Byte\Router;
-use Byte\Database;
 use Byte\Request;
 
 $router = new Router;
 
-$router->get('/', function () use ($router) {
+$args = Request::createFromGlobals();
+if(@$args->query->get['language'] != NULL) {
+    Request::setSession('language', @$args->query->get['language']);
+}
 
-    $router->render('home');
+
+$router->get('/', function () use ($router) {
+    $router->render('login');
 });
+
+$router->get('/login', function () use ($router) {
+    $router->render('login');
+});
+
+$router->get('/register', function () use ($router) {
+    $router->render('register');
+});
+
 
 $router->set404(function () use ($router) {
     $router->render('404');
 });
 
-$router->run();
+// back-end
+
+$router->post('/register', function () use ($router) {
+    $router->runController('Register');
+});
+
+$router->post('/login', function () use ($router) {
+    $router->runController('Login');
+});
+
+
 Request::runShield();
 Request::generateRequest('Getting Access');
+$router->run();
+
 
 interface ControllerResolverInterface
 {

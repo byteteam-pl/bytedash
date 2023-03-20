@@ -313,7 +313,6 @@ class Router
 
         return $this->serverBasePath;
     }
-
     public function setBasePath($serverBasePath)
     {
         $this->serverBasePath = $serverBasePath;
@@ -323,7 +322,7 @@ class Router
         $this->page = $file;
         require 'App/Views/' . $file . '.php';
     }
-    public function runController($controllerName, $argumentTable)
+    public function runController($controllerName, $argumentTable = FALSE)
     {
         $this->controller = $controllerName;
         require 'App/Controllers/' . $controllerName . "Controller.php";
