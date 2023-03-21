@@ -13,6 +13,11 @@ $router = new Router;
 $args = Request::createFromGlobals();
 if(@$args->query->get['language'] != NULL) {
     Request::setSession('language', @$args->query->get['language']);
+    if($Translate->checkTranslateExist(@$args->query->get['language'])) {
+        Request::setSession('language', @$args->query->get['language']);
+    } else {
+        Request::setSession('language', 'EN');
+    }
 }
 
 
@@ -41,6 +46,11 @@ $router->post('/register', function () use ($router) {
 
 $router->post('/login', function () use ($router) {
     $router->runController('Login');
+});
+
+$router->get('/logout', function () use ($router) {
+    Request::setSession('logged', FALSE);
+    header('Location: /login');
 });
 
 

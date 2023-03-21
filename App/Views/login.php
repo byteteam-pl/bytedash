@@ -6,7 +6,7 @@ $Translate = new Translate;
 @session_start();
 require 'App/Config/config.php';
 
-if(Request::getSession('loged', FALSE)) {
+if(Request::getSession('logged', FALSE)) {
   header('Location: /dash');
 }
 ?>

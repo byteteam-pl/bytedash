@@ -18,8 +18,12 @@ if(HttpKernel::checkCSRF($args->query->post['byte_csrf'])) {
     if(Account::checkAccountExist($email, $config)) {
         if(Account::authorizeAccount($email, $password, $config)) {
             if(Account::saveAccountSession($email, $password, $config)) {
-                Account::saveLogin($email, $config);
-                header('Location: /dash');
+                if(Account::saveLogin($email, $config)) {
+                    header('Location: /dash');
+                } else {
+                    Request::setSession('byte-error', 'account-500');
+                    header('Location: /login');
+                }
             } else {
                 // Internal Server Error
                 Request::setSession('byte-error', 'account-500');
